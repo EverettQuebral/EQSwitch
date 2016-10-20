@@ -95,6 +95,8 @@ namespace ASCOM.EQSwitch
         /// </summary>
         private TraceLogger tl;
 
+        private MainWindow mainWindow;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="EQSwitch"/> class.
         /// Must be public for COM registration.
@@ -212,7 +214,12 @@ namespace ASCOM.EQSwitch
             {
                 tl.LogMessage("Connected Set", value.ToString());
                 if (value == IsConnected)
+                {
+                    mainWindow = new MainWindow(this);
+                    mainWindow.Show();
                     return;
+                }
+                    
 
                 if (value)
                 {

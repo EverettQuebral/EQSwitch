@@ -7,6 +7,9 @@ using System.Text;
 using System.Windows.Forms;
 using ASCOM.Utilities;
 using ASCOM.EQSwitch;
+using System.IO.Ports;
+using System.Threading;
+using System.Diagnostics;
 
 namespace ASCOM.EQSwitch
 {
@@ -60,6 +63,34 @@ namespace ASCOM.EQSwitch
             if (comboBoxComPort.Items.Contains(Switch.comPort))
             {
                 comboBoxComPort.SelectedItem = Switch.comPort;
+            }
+        }
+
+        private bool DetectEQSwitch(string portname)
+        {
+            SerialPort testPort = new SerialPort(portname, 115200);
+            try
+            {
+                testPort.Open();
+                testPort.WriteLine("Z");
+
+                Thread.Sleep(10);
+                string returnMessage = testPort.ReadExisting().ToString();
+                testPort.Close();
+                Debug.WriteLine(returnMessage);
+
+                if (returnMessage.Contains("EQSwitch"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch(Exception ex)
+            {
+                return false;
             }
         }
     }

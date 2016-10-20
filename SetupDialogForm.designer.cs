@@ -35,6 +35,8 @@ namespace ASCOM.EQSwitch
             this.label2 = new System.Windows.Forms.Label();
             this.chkTrace = new System.Windows.Forms.CheckBox();
             this.comboBoxComPort = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picASCOM)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,7 +44,7 @@ namespace ASCOM.EQSwitch
             // 
             this.cmdOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.cmdOK.Location = new System.Drawing.Point(281, 112);
+            this.cmdOK.Location = new System.Drawing.Point(216, 135);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(59, 24);
             this.cmdOK.TabIndex = 0;
@@ -54,7 +56,7 @@ namespace ASCOM.EQSwitch
             // 
             this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cmdCancel.Location = new System.Drawing.Point(281, 142);
+            this.cmdCancel.Location = new System.Drawing.Point(281, 134);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(59, 25);
             this.cmdCancel.TabIndex = 1;
@@ -64,6 +66,7 @@ namespace ASCOM.EQSwitch
             // 
             // label1
             // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(123, 31);
@@ -87,7 +90,7 @@ namespace ASCOM.EQSwitch
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 90);
+            this.label2.Location = new System.Drawing.Point(13, 115);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 5;
@@ -96,7 +99,7 @@ namespace ASCOM.EQSwitch
             // chkTrace
             // 
             this.chkTrace.AutoSize = true;
-            this.chkTrace.Location = new System.Drawing.Point(77, 118);
+            this.chkTrace.Location = new System.Drawing.Point(16, 142);
             this.chkTrace.Name = "chkTrace";
             this.chkTrace.Size = new System.Drawing.Size(69, 17);
             this.chkTrace.TabIndex = 6;
@@ -106,16 +109,37 @@ namespace ASCOM.EQSwitch
             // comboBoxComPort
             // 
             this.comboBoxComPort.FormattingEnabled = true;
-            this.comboBoxComPort.Location = new System.Drawing.Point(77, 87);
+            this.comboBoxComPort.Location = new System.Drawing.Point(77, 112);
             this.comboBoxComPort.Name = "comboBoxComPort";
             this.comboBoxComPort.Size = new System.Drawing.Size(90, 21);
             this.comboBoxComPort.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 86);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(267, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Select the COM port where the EQSwitch is connected";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(107, 142);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(100, 17);
+            this.checkBox1.TabIndex = 9;
+            this.checkBox1.Text = "Show Controller";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // SetupDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 175);
+            this.ClientSize = new System.Drawing.Size(350, 168);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.comboBoxComPort);
             this.Controls.Add(this.chkTrace);
             this.Controls.Add(this.label2);
@@ -145,5 +169,7 @@ namespace ASCOM.EQSwitch
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox chkTrace;
         private System.Windows.Forms.ComboBox comboBoxComPort;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

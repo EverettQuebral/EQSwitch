@@ -36,7 +36,7 @@ namespace ASCOM.EQSwitch
             this.chkTrace = new System.Windows.Forms.CheckBox();
             this.comboBoxComPort = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.showUI = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picASCOM)).BeginInit();
             this.SuspendLayout();
             // 
@@ -123,22 +123,22 @@ namespace ASCOM.EQSwitch
             this.label3.TabIndex = 8;
             this.label3.Text = "Select the COM port where the EQSwitch is connected";
             // 
-            // checkBox1
+            // showUI
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(107, 142);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(100, 17);
-            this.checkBox1.TabIndex = 9;
-            this.checkBox1.Text = "Show Controller";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.showUI.AutoSize = true;
+            this.showUI.Location = new System.Drawing.Point(107, 142);
+            this.showUI.Name = "showUI";
+            this.showUI.Size = new System.Drawing.Size(100, 17);
+            this.showUI.TabIndex = 9;
+            this.showUI.Text = "Show Controller";
+            this.showUI.UseVisualStyleBackColor = true;
             // 
             // SetupDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(350, 168);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.showUI);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.comboBoxComPort);
             this.Controls.Add(this.chkTrace);
@@ -170,6 +170,6 @@ namespace ASCOM.EQSwitch
         private System.Windows.Forms.CheckBox chkTrace;
         private System.Windows.Forms.ComboBox comboBoxComPort;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox showUI;
     }
 }

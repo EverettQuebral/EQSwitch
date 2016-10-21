@@ -35,6 +35,7 @@ using ASCOM.Utilities;
 using ASCOM.DeviceInterface;
 using System.Globalization;
 using System.Collections;
+using System.IO.Ports;
 
 namespace ASCOM.EQSwitch
 {
@@ -68,12 +69,15 @@ namespace ASCOM.EQSwitch
         private static string driverDescription = "ASCOM Switch Driver for EQSwitch.";
 
         internal static string comPortProfileName = "COM Port"; // Constants used for Profile persistence
+        internal static string showUIProfileName = "Show Controller";
         internal static string comPortDefault = "COM1";
         internal static string traceStateProfileName = "Trace Level";
         internal static string traceStateDefault = "false";
+        internal static string showUIDefault = "true";
 
         internal static string comPort; // Variables to hold the currrent device configuration
         internal static bool traceState;
+        internal static bool showUI;
 
         /// <summary>
         /// Private variable to hold the connected state
@@ -97,6 +101,10 @@ namespace ASCOM.EQSwitch
 
         private MainWindow mainWindow;
 
+        private SerialPort serialPort;
+
+        public event EventHandler<SwitchStateChangedEventArgs> SwitchStateChanged;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="EQSwitch"/> class.
         /// Must be public for COM registration.
@@ -117,7 +125,7 @@ namespace ASCOM.EQSwitch
             tl.LogMessage("Switch", "Completed initialisation");
         }
 
-
+        private string message;
         //
         // PUBLIC COM INTERFACE ISwitchV2 IMPLEMENTATION
         //
@@ -158,7 +166,12 @@ namespace ASCOM.EQSwitch
 
         public string Action(string actionName, string actionParameters)
         {
-            throw new ASCOM.ActionNotImplementedException("Action " + actionName + " is not implemented by this driver");
+            CheckConnected("Action");
+            if (IsConnected)
+            {
+                serialPort.WriteLine(actionName);
+            }
+            return actionName;
         }
 
         public void CommandBlind(string command, bool raw)
@@ -203,6 +216,34 @@ namespace ASCOM.EQSwitch
             astroUtilities = null;
         }
 
+        public virtual void OnSwitchStateChanged(SwitchStateChangedEventArgs e)
+        {
+            if (SwitchStateChanged != null)
+            {
+                SwitchStateChanged(this, e);
+            }
+        }
+
+        private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            message = SerialPort.ReadTo("#");
+            Debug.WriteLine(message);
+            tl.LogMessage("EQSwitch", message);
+
+            if (message.Contains("STATUS"))
+            {
+                string status = message.Split(':')[1];
+                if (status.Contains("A")) OnSwitchStateChanged(new SwitchStateChangedEventArgs(1, true));
+                if (status.Contains("a")) OnSwitchStateChanged(new SwitchStateChangedEventArgs(1, false));
+                if (status.Contains("B")) OnSwitchStateChanged(new SwitchStateChangedEventArgs(2, true));
+                if (status.Contains("b")) OnSwitchStateChanged(new SwitchStateChangedEventArgs(2, false));
+                if (status.Contains("C")) OnSwitchStateChanged(new SwitchStateChangedEventArgs(3, true));
+                if (status.Contains("c")) OnSwitchStateChanged(new SwitchStateChangedEventArgs(3, false));
+                if (status.Contains("D")) OnSwitchStateChanged(new SwitchStateChangedEventArgs(4, true));
+                if (status.Contains("d")) OnSwitchStateChanged(new SwitchStateChangedEventArgs(4, false));
+            }
+        }
+
         public bool Connected
         {
             get
@@ -225,14 +266,28 @@ namespace ASCOM.EQSwitch
                 {
                     connectedState = true;
                     tl.LogMessage("Connected Set", "Connecting to port " + comPort);
-                    // TODO connect to the device
+                    // TODO connect to the 
+                    serialPort = new SerialPort(comPort, 115200);
+                    serialPort.DataReceived += new SerialDataReceivedEventHandler(this.serialPort_DataReceived);
+                    serialPort.Open();
+
                 }
                 else
                 {
                     connectedState = false;
                     tl.LogMessage("Connected Set", "Disconnecting from port " + comPort);
                     // TODO disconnect from the device
+
+                    serialPort.Close();
                 }
+            }
+        }
+
+        public SerialPort SerialPort
+        {
+            get
+            {
+                return serialPort;
             }
         }
 
@@ -664,6 +719,7 @@ namespace ASCOM.EQSwitch
                 driverProfile.DeviceType = "Switch";
                 traceState = Convert.ToBoolean(driverProfile.GetValue(driverID, traceStateProfileName, string.Empty, traceStateDefault));
                 comPort = driverProfile.GetValue(driverID, comPortProfileName, string.Empty, comPortDefault);
+                showUI = Convert.ToBoolean(driverProfile.GetValue(driverID, showUIProfileName, string.Empty, showUIDefault));
             }
         }
 
@@ -677,6 +733,7 @@ namespace ASCOM.EQSwitch
                 driverProfile.DeviceType = "Switch";
                 driverProfile.WriteValue(driverID, traceStateProfileName, traceState.ToString());
                 driverProfile.WriteValue(driverID, comPortProfileName, comPort.ToString());
+                driverProfile.WriteValue(driverID, showUIProfileName, showUI.ToString());
             }
         }
 

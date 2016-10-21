@@ -36,12 +36,11 @@
             // 
             // checkBox1
             // 
-            this.checkBox1.Appearance = System.Windows.Forms.Appearance.Button;
             this.checkBox1.AutoSize = true;
             this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(52, 59);
+            this.checkBox1.Location = new System.Drawing.Point(52, 53);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(88, 32);
+            this.checkBox1.Size = new System.Drawing.Size(97, 26);
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Text = "Switch 1";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -49,39 +48,39 @@
             // 
             // checkBox2
             // 
-            this.checkBox2.Appearance = System.Windows.Forms.Appearance.Button;
             this.checkBox2.AutoSize = true;
             this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.Location = new System.Drawing.Point(52, 122);
+            this.checkBox2.Location = new System.Drawing.Point(52, 112);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(88, 32);
+            this.checkBox2.Size = new System.Drawing.Size(97, 26);
             this.checkBox2.TabIndex = 1;
             this.checkBox2.Text = "Switch 2";
             this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // checkBox3
             // 
-            this.checkBox3.Appearance = System.Windows.Forms.Appearance.Button;
             this.checkBox3.AutoSize = true;
             this.checkBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox3.Location = new System.Drawing.Point(52, 183);
+            this.checkBox3.Location = new System.Drawing.Point(52, 174);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(88, 32);
+            this.checkBox3.Size = new System.Drawing.Size(97, 26);
             this.checkBox3.TabIndex = 2;
             this.checkBox3.Text = "Switch 3";
             this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // checkBox4
             // 
-            this.checkBox4.Appearance = System.Windows.Forms.Appearance.Button;
             this.checkBox4.AutoSize = true;
             this.checkBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox4.Location = new System.Drawing.Point(52, 245);
+            this.checkBox4.Location = new System.Drawing.Point(52, 234);
             this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(88, 32);
+            this.checkBox4.Size = new System.Drawing.Size(97, 26);
             this.checkBox4.TabIndex = 3;
             this.checkBox4.Text = "Switch 4";
             this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
             // MainWindow
             // 
@@ -95,6 +94,7 @@
             this.Name = "MainWindow";
             this.Text = "MainWindow";
             this.Load += new System.EventHandler(this.MainWindow_Load);
+            this.Shown += new System.EventHandler(this.MainWindow_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

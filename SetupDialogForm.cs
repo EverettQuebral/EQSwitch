@@ -29,6 +29,7 @@ namespace ASCOM.EQSwitch
             // Update the state variables with results from the dialogue
             Switch.comPort = (string)comboBoxComPort.SelectedItem;
             Switch.traceState = chkTrace.Checked;
+            Switch.showUI = showUI.Checked;
         }
 
         private void cmdCancel_Click(object sender, EventArgs e) // Cancel button event handler
@@ -58,7 +59,17 @@ namespace ASCOM.EQSwitch
             chkTrace.Checked = Switch.traceState;
             // set the list of com ports to those that are currently available
             comboBoxComPort.Items.Clear();
-            comboBoxComPort.Items.AddRange(System.IO.Ports.SerialPort.GetPortNames());      // use System.IO because it's static
+
+            String[] ports = SerialPort.GetPortNames();
+            foreach (string port in ports)
+            {
+                Debug.WriteLine("Port Here: " + port);
+                if (DetectEQSwitch(port))
+                {
+                    comboBoxComPort.Items.Add(port);
+                }
+            }
+            //comboBoxComPort.Items.AddRange(System.IO.Ports.SerialPort.GetPortNames());      // use System.IO because it's static
             // select the current port if possible
             if (comboBoxComPort.Items.Contains(Switch.comPort))
             {

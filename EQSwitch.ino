@@ -3,6 +3,9 @@
 #define RELAY3 8
 #define RELAY4 9
 
+const int button1Pin = 3;
+int button1State = 0;
+
 String inputString;
 // for status of the relay, on = true
 bool relay1 = false;
@@ -28,6 +31,19 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  
+  button1State = digitalRead(button1Pin);
+  if (button1State == HIGH){
+    digitalWrite(RELAY1, relay1);
+    relay1 = !relay1;
+    if (relay1) {
+      Serial.println("A#");
+    }
+    else {
+      Serial.println("a#");
+    }
+  }
+  delay(500);
 }
 
 void serialCommand(String commandString){

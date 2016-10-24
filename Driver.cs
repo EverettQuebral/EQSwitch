@@ -254,10 +254,16 @@ namespace ASCOM.EQSwitch
             set
             {
                 tl.LogMessage("Connected Set", value.ToString());
+
+                ReadProfile();
+
                 if (value == IsConnected)
                 {
-                    mainWindow = new MainWindow(this);
-                    mainWindow.Show();
+                    if (!mainWindow.Visible && showUI)
+                    {
+                        mainWindow = new MainWindow(this);
+                        mainWindow.Show();
+                    }
                     return;
                 }
                     
@@ -270,6 +276,12 @@ namespace ASCOM.EQSwitch
                     serialPort = new SerialPort(comPort, 115200);
                     serialPort.DataReceived += new SerialDataReceivedEventHandler(this.serialPort_DataReceived);
                     serialPort.Open();
+
+                    if (showUI)
+                    {
+                        mainWindow = new MainWindow(this);
+                        mainWindow.Show();
+                    }
 
                 }
                 else

@@ -145,7 +145,7 @@ namespace ASCOM.EQSwitch
             if (IsConnected)
                 System.Windows.Forms.MessageBox.Show("Already connected, just press OK");
 
-            using (SetupDialogForm F = new SetupDialogForm())
+            using (SetupDialogForm F = new SetupDialogForm(this.DriverInfo))
             {
                 var result = F.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK)
@@ -174,7 +174,7 @@ namespace ASCOM.EQSwitch
             return actionName;
         }
 
-        public void CommandBlind(string command, bool raw)
+        public void CommandBlind(string command, bool raw = false)
         {
             CheckConnected("CommandBlind");
             // Call CommandString and return as soon as it finishes
@@ -184,7 +184,7 @@ namespace ASCOM.EQSwitch
             // DO NOT have both these sections!  One or the other
         }
 
-        public bool CommandBool(string command, bool raw)
+        public bool CommandBool(string command, bool raw = false)
         {
             CheckConnected("CommandBool");
             string ret = CommandString(command, raw);
@@ -194,7 +194,7 @@ namespace ASCOM.EQSwitch
             // DO NOT have both these sections!  One or the other
         }
 
-        public string CommandString(string command, bool raw)
+        public string CommandString(string command, bool raw = false)
         {
             CheckConnected("CommandString");
             // it's a good idea to put all the low level communication with the device here,

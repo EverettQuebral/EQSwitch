@@ -85,9 +85,10 @@ namespace ASCOM.EQSwitch
             try
             {
                 testPort.Open();
-                testPort.WriteLine("Z");
+                Thread.Sleep(100);
+                testPort.WriteLine("X");
 
-                Thread.Sleep(10);
+                Thread.Sleep(300);
                 string returnMessage = testPort.ReadExisting().ToString();
                 testPort.Close();
                 Debug.WriteLine(returnMessage);
@@ -98,11 +99,13 @@ namespace ASCOM.EQSwitch
                 }
                 else
                 {
+                    System.Diagnostics.Debug.WriteLine("PORT NOT FOUND");
                     return false;
                 }
             }
             catch(Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
                 return false;
             }
         }

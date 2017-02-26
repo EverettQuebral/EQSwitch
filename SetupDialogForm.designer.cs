@@ -37,6 +37,7 @@ namespace ASCOM.EQSwitch
             this.comboBoxComPort = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.showUI = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picASCOM)).BeginInit();
             this.SuspendLayout();
             // 
@@ -133,11 +134,22 @@ namespace ASCOM.EQSwitch
             this.showUI.Text = "Show Controller";
             this.showUI.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(265, 110);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Retry";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // SetupDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(350, 168);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.showUI);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.comboBoxComPort);
@@ -171,5 +183,6 @@ namespace ASCOM.EQSwitch
         private System.Windows.Forms.ComboBox comboBoxComPort;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox showUI;
+        private System.Windows.Forms.Button button1;
     }
 }

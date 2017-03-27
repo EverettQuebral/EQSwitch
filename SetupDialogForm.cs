@@ -32,6 +32,10 @@ namespace ASCOM.EQSwitch
             Switch.comPort = (string)comboBoxComPort.SelectedItem;
             Switch.traceState = chkTrace.Checked;
             Switch.showUI = showUI.Checked;
+            Switch.portOneName = txtBoxSwitch1.Text;
+            Switch.portTwoName = txtBoxSwitch2.Text;
+            Switch.portThreeName = txtBoxSwitch3.Text;
+            Switch.portFourName = txtBoxSwitch4.Text;
         }
 
         private void cmdCancel_Click(object sender, EventArgs e) // Cancel button event handler
@@ -77,6 +81,11 @@ namespace ASCOM.EQSwitch
             {
                 comboBoxComPort.SelectedItem = Switch.comPort;
             }
+
+            txtBoxSwitch1.Text = Switch.portOneName;
+            txtBoxSwitch2.Text = Switch.portTwoName;
+            txtBoxSwitch3.Text = Switch.portThreeName;
+            txtBoxSwitch4.Text = Switch.portFourName;
         }
 
         private bool DetectEQSwitch(string portname)
@@ -113,6 +122,10 @@ namespace ASCOM.EQSwitch
         private void button1_Click(object sender, EventArgs e)
         {
             InitUI();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
         }
     }
 }

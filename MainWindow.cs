@@ -17,6 +17,11 @@ namespace ASCOM.EQSwitch
             this.eqSwitch = eqSwitch;
             this.eqSwitch.SwitchStateChanged += SwitchStateChanged;
             InitializeComponent();
+
+            checkBox1.Text = eqSwitch.PortOneName;
+            checkBox2.Text = eqSwitch.PortTwoName;
+            checkBox3.Text = eqSwitch.PortThreeName;
+            checkBox4.Text = eqSwitch.PortFourName;
         }
 
         private void SwitchStateChanged(object sender, SwitchStateChangedEventArgs e)
@@ -36,6 +41,7 @@ namespace ASCOM.EQSwitch
                     checkBox4.InvokeIfRequired(checkBox4 => { checkBox4.Checked = e.state; });
                     break;
             }
+            eqSwitch.SetSwitch((Int16)e.switchNumber, e.state);
         }
 
 
@@ -48,10 +54,12 @@ namespace ASCOM.EQSwitch
         {
             if (checkBox1.Checked){
                 eqSwitch.Action("A", "");
+                eqSwitch.SetSwitch(1, true);
             }
             else
             {
                 eqSwitch.Action("a", "");
+                eqSwitch.SetSwitch(1, false);
             }
         }
 
@@ -60,10 +68,12 @@ namespace ASCOM.EQSwitch
             if (checkBox2.Checked)
             {
                 eqSwitch.Action("B", "");
+                eqSwitch.SetSwitch(2, true);
             }
             else
             {
                 eqSwitch.Action("b", "");
+                eqSwitch.SetSwitch(2, false);
             }
         }
 
@@ -72,10 +82,12 @@ namespace ASCOM.EQSwitch
             if (checkBox3.Checked)
             {
                 eqSwitch.Action("C", "");
+                eqSwitch.SetSwitch(3, true);
             }
             else
             {
                 eqSwitch.Action("c", "");
+                eqSwitch.SetSwitch(3, false);
             }
         }
 
@@ -84,10 +96,12 @@ namespace ASCOM.EQSwitch
             if (checkBox4.Checked)
             {
                 eqSwitch.Action("D", "");
+                eqSwitch.SetSwitch(4, true);
             }
             else
             {
                 eqSwitch.Action("d", "");
+                eqSwitch.SetSwitch(4, false);
             }
         }
 

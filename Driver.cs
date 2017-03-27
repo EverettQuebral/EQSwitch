@@ -75,6 +75,14 @@ namespace ASCOM.EQSwitch
         internal static string traceStateDefault = "false";
         internal static string showUIDefault = "true";
 
+        internal static string portOneName = "Telescope";
+        internal static string portTwoName = "USB HUB";
+        internal static string portThreeName = "Camera Cooler";
+        internal static string portFourName = "Focuser";
+
+        internal static string[] switchNames = new string[] { portOneName, portTwoName, portThreeName, portFourName };
+        internal static Boolean[] switchStates = new Boolean[] { false, false, false, false };
+
         internal static string comPort; // Variables to hold the currrent device configuration
         internal static bool traceState;
         internal static bool showUI;
@@ -142,15 +150,19 @@ namespace ASCOM.EQSwitch
         {
             // consider only showing the setup dialog if not connected
             // or call a different dialog if connected
-            if (IsConnected)
+            if (IsConnected) {
                 System.Windows.Forms.MessageBox.Show("Already connected, just press OK");
-
-            using (SetupDialogForm F = new SetupDialogForm(this.DriverInfo))
+            }
+               
+            else
             {
-                var result = F.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK)
+                using (SetupDialogForm F = new SetupDialogForm(this.DriverInfo))
                 {
-                    WriteProfile(); // Persist device configuration values to the ASCOM Profile store
+                    var result = F.ShowDialog();
+                    if (result == System.Windows.Forms.DialogResult.OK)
+                    {
+                        WriteProfile(); // Persist device configuration values to the ASCOM Profile store
+                    }
                 }
             }
         }
@@ -170,6 +182,9 @@ namespace ASCOM.EQSwitch
             if (IsConnected)
             {
                 serialPort.WriteLine(actionName);
+
+                // we need to set the state here
+
             }
             return actionName;
         }
@@ -221,6 +236,7 @@ namespace ASCOM.EQSwitch
             if (SwitchStateChanged != null)
             {
                 SwitchStateChanged(this, e);
+                SetSwitch((Int16)(e.switchNumber), e.state);
             }
         }
 
@@ -350,9 +366,41 @@ namespace ASCOM.EQSwitch
         {
             get
             {
-                string name = "Short driver name - please customise";
+                string name = "EQ Switch Controller";
                 tl.LogMessage("Name Get", name);
                 return name;
+            }
+        }
+
+        public string PortOneName
+        {
+            get
+            {
+                return portOneName;
+            }
+        }
+
+        public string PortTwoName
+        {
+            get
+            {
+                return portTwoName;
+            }
+        }
+
+        public string PortThreeName
+        {
+            get
+            {
+                return portThreeName;
+            }
+        }
+
+        public string PortFourName
+        {
+            get
+            {
+                return portFourName;
             }
         }
 
@@ -360,7 +408,7 @@ namespace ASCOM.EQSwitch
 
         #region ISwitchV2 Implementation
 
-        private short numSwitch = 0;
+        private short numSwitch = 4;
 
         /// <summary>
         /// The number of switches managed by this driver
@@ -384,8 +432,9 @@ namespace ASCOM.EQSwitch
         public string GetSwitchName(short id)
         {
             Validate("GetSwitchName", id);
-            tl.LogMessage("GetSwitchName", string.Format("GetSwitchName({0}) - not implemented", id));
-            throw new MethodNotImplementedException("GetSwitchName");
+            return switchNames[id];
+            //tl.LogMessage("GetSwitchName", string.Format("GetSwitchName({0}) - not implemented", id));
+            //throw new MethodNotImplementedException("GetSwitchName");
             // or
             //tl.LogMessage("GetSwitchName", string.Format("GetSwitchName({0}) - default Switch{0}", id));
             //return "Switch" + id.ToString();
@@ -399,8 +448,9 @@ namespace ASCOM.EQSwitch
         public void SetSwitchName(short id, string name)
         {
             Validate("SetSwitchName", id);
-            tl.LogMessage("SetSwitchName", string.Format("SetSwitchName({0}) = {1} - not implemented", id, name));
-            throw new MethodNotImplementedException("SetSwitchName");
+            switchNames[id] = name;
+            //tl.LogMessage("SetSwitchName", string.Format("SetSwitchName({0}) = {1} - not implemented", id, name));
+            //throw new MethodNotImplementedException("SetSwitchName");
         }
 
         /// <summary>
@@ -411,8 +461,9 @@ namespace ASCOM.EQSwitch
         public string GetSwitchDescription(short id)
         {
             Validate("GetSwitchDescription", id);
-            tl.LogMessage("GetSwitchDescription", string.Format("GetSwitchDescription({0}) - not implemented", id));
-            throw new MethodNotImplementedException("GetSwitchDescription");
+            return switchNames[id];
+            //tl.LogMessage("GetSwitchDescription", string.Format("GetSwitchDescription({0}) - not implemented", id));
+            //throw new MethodNotImplementedException("GetSwitchDescription");
         }
 
         /// <summary>
@@ -449,8 +500,9 @@ namespace ASCOM.EQSwitch
         public bool GetSwitch(short id)
         {
             Validate("GetSwitch", id);
-            tl.LogMessage("GetSwitch", string.Format("GetSwitch({0}) - not implemented", id));
-            throw new MethodNotImplementedException("GetSwitch");
+            return switchStates[id - 1];
+            //tl.LogMessage("GetSwitch", string.Format("GetSwitch({0}) - not implemented", id));
+            //throw new MethodNotImplementedException("GetSwitch");
         }
 
         /// <summary>
@@ -464,14 +516,15 @@ namespace ASCOM.EQSwitch
         public void SetSwitch(short id, bool state)
         {
             Validate("SetSwitch", id);
-            if (!CanWrite(id))
-            {
-                var str = string.Format("SetSwitch({0}) - Cannot Write", id);
-                tl.LogMessage("SetSwitch", str);
-                throw new MethodNotImplementedException(str);
-            }
-            tl.LogMessage("SetSwitch", string.Format("SetSwitch({0}) = {1} - not implemented", id, state));
-            throw new MethodNotImplementedException("SetSwitch");
+            switchStates[id - 1] = state;
+            //if (!CanWrite(id))
+            //{
+            //    var str = string.Format("SetSwitch({0}) - Cannot Write", id);
+            //    tl.LogMessage("SetSwitch", str);
+            //    throw new MethodNotImplementedException(str);
+            //}
+            //tl.LogMessage("SetSwitch", string.Format("SetSwitch({0}) = {1} - not implemented", id, state));
+            //throw new MethodNotImplementedException("SetSwitch");
         }
 
         #endregion
@@ -573,7 +626,7 @@ namespace ASCOM.EQSwitch
         /// <param name="id">The id.</param>
         private void Validate(string message, short id)
         {
-            if (id < 0 || id >= numSwitch)
+            if (id < 0 || id > numSwitch)
             {
                 tl.LogMessage(message, string.Format("Switch {0} not available, range is 0 to {1}", id, numSwitch - 1));
                 throw new InvalidValueException(message, id.ToString(), string.Format("0 to {0}", numSwitch - 1));
@@ -732,6 +785,10 @@ namespace ASCOM.EQSwitch
                 traceState = Convert.ToBoolean(driverProfile.GetValue(driverID, traceStateProfileName, string.Empty, traceStateDefault));
                 comPort = driverProfile.GetValue(driverID, comPortProfileName, string.Empty, comPortDefault);
                 showUI = Convert.ToBoolean(driverProfile.GetValue(driverID, showUIProfileName, string.Empty, showUIDefault));
+                portOneName = driverProfile.GetValue(driverID, portOneName, string.Empty, portOneName);
+                portTwoName = driverProfile.GetValue(driverID, portTwoName, string.Empty, portTwoName);
+                portThreeName = driverProfile.GetValue(driverID, portThreeName, string.Empty, portThreeName);
+                portFourName = driverProfile.GetValue(driverID, portFourName, string.Empty, portFourName);
             }
         }
 
@@ -746,6 +803,10 @@ namespace ASCOM.EQSwitch
                 driverProfile.WriteValue(driverID, traceStateProfileName, traceState.ToString());
                 driverProfile.WriteValue(driverID, comPortProfileName, comPort.ToString());
                 driverProfile.WriteValue(driverID, showUIProfileName, showUI.ToString());
+                driverProfile.WriteValue(driverID, portOneName, portOneName);
+                driverProfile.WriteValue(driverID, portTwoName, portTwoName);
+                driverProfile.WriteValue(driverID, portThreeName, portThreeName);
+                driverProfile.WriteValue(driverID, portFourName, portFourName);
             }
         }
 

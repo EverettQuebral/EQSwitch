@@ -5,13 +5,13 @@
 [Setup]
 AppID={{b780ac1c-f1b3-46b7-86b5-8de1b9830af7}
 AppName=ASCOM EQSwitch Switch Driver
-AppVerName=ASCOM EQSwitch Switch Driver 1.0.0
-AppVersion=1.0.0
+AppVerName=ASCOM EQSwitch Switch Driver 1.0.2
+AppVersion=1.0.2
 AppPublisher=Everett Quebral <Everett.Quebral@gmail.com>
 AppPublisherURL=mailto:Everett.Quebral@gmail.com
 AppSupportURL=http://everettquebral.com/
 AppUpdatesURL=http://everettquebral.com/
-VersionInfoVersion=1.0.0
+VersionInfoVersion=1.0.2
 MinVersion=0,5.0.2195sp4
 DefaultDirName="{cf}\ASCOM\Switch"
 DisableDirPage=yes

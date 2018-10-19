@@ -1,4 +1,4 @@
-﻿// EQ Switch
+// EQ Switch
 // Arduino code in controlling relay switches
 
 #define RELAY1 8
@@ -12,6 +12,7 @@ const int button3Pin = 5;
 const int button4Pin = 4;
 
 int button1State = 0;
+int button1StatePrevious = 0;
 int button2State = 0;
 int button3State = 0;
 int button4State = 0;
@@ -49,18 +50,60 @@ void loop() {
   // put your main code here, to run repeatedly:
   
   button1State = digitalRead(button1Pin);
-  if (button1State == LOW){
-    digitalWrite(RELAY1, relay1);
+  button2State = digitalRead(button2Pin);
+  button3State = digitalRead(button3Pin);
+  button4State = digitalRead(button4Pin);
+ 
+  if (button1State != button1StatePrevious){
+    button1StatePrevious = button1State;
     Serial.print("STATUS:");
-    relay1 = !relay1;
-    if (relay1) {
+    digitalWrite(RELAY1, !button1State);
+    if (button1State){
       Serial.println("A#");
     }
     else {
       Serial.println("a#");
     }
   }
-  delay(500);
+
+  if (button2State == LOW){
+    digitalWrite(RELAY2, relay2);
+    Serial.print("STATUS:");
+    relay2 = !relay2;
+    if (relay2) {
+      Serial.println("B#");
+    }
+    else {
+      Serial.println("b#");
+    }
+    delay(300);
+  }
+  if (button3State == LOW){
+    digitalWrite(RELAY3, relay3);
+    Serial.print("STATUS:");
+    relay3 = !relay3;
+    if (relay3) {
+      Serial.println("C#");
+    }
+    else {
+      Serial.println("c#");
+    }
+    delay(300);
+  }
+  if (button4State == LOW){
+    digitalWrite(RELAY4, relay4);
+    Serial.print("STATUS:");
+    relay4 = !relay4;
+    if (relay4) {
+      Serial.println("D#");
+    }
+    else {
+      Serial.println("d#");
+    }
+    delay(300);
+  }
+  
+  
 }
 
 void serialCommand(String commandString){
@@ -122,6 +165,10 @@ void serialCommand(String commandString){
       if (relay2) _answer += "B"; else _answer += "b";
       if (relay3) _answer += "C"; else _answer += "c";
       if (relay4) _answer += "D"; else _answer += "d";
+      break;
+    case 'X' :
+    case 'x' :
+      _answer += "EQSwitch";
       break;
       
     default : 
